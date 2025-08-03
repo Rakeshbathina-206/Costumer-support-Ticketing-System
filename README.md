@@ -1,6 +1,3 @@
-Here's a basic and professional `README.md` file for your **Customer Support Ticketing System** project, based on the information in your uploaded PDF.
-
----
 
  Customer Support Ticketing System
 
