@@ -130,8 +130,9 @@ Final Flow Summary:
 Controller ➡ Service ➡ Repository ➡ Database 
 Secure authentication with JWT 
 Role-based authorization
-
 Ticket lifecycle: Create ➔ Assign ➔ Resolve
+
+---
 
 
  Contact
