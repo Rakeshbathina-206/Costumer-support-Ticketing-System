@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Task List</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { color: #2c3e50; }
+    #taskForm { margin-bottom: 20px; }
+    input, button { padding: 8px; margin-right: 5px; }
+    button { background-color: #3498db; color: white; border: none; cursor: pointer; }
+    button:hover { background-color: #2980b9; }
+    #taskList { margin-top: 20px; padding: 0; list-style: none; }
+    li { padding: 10px; border: 1px solid #ccc; margin-bottom: 5px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h1>My Tasks</h1>
+  
+  <!-- Add Task Form -->
+  <form id="taskForm">
+    <input type="text" id="taskInput" placeholder="Enter new task" required>
+    <button type="submit">Add Task</button>
+  </form>
+
+  <!-- Task List -->
+  <ul id="taskList"></ul>
+
+  <script>
+    const apiUrl = "http://localhost:8080/tasks";
+    const taskList = document.getElementById("taskList");
+    const taskForm = document.getElementById("taskForm");
+    const taskInput = document.getElementById("taskInput");
+
+    // Load tasks from backend
+    function loadTasks() {
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(tasks => {
+          taskList.innerHTML = "";
+          tasks.forEach(task => {
+            let li = document.createElement("li");
+            li.textContent = task.name;
+            taskList.appendChild(li);
+          });
+        });
+    }
+
+    // Add task
+    taskForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const newTask = { name: taskInput.value };
+
+      fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newTask)
+      }).then(() => {
+        taskInput.value = "";
+        loadTasks();
+      });
+    });
+
+    // Load tasks on page load
+    loadTasks();
+  </script>
+</body>
+</html>
